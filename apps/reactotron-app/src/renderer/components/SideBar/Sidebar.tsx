@@ -1,22 +1,23 @@
-import React from "react"
+import React from "react";
 import {
-  MdReorder,
   MdAssignment,
-  MdPhoneIphone,
   MdLiveHelp,
-  MdWarning,
-  MdOutlineMobileFriendly,
   MdMobiledataOff,
-} from "react-icons/md"
-import { FaMagic } from "react-icons/fa"
-import styled from "styled-components"
+  MdOutlineMobileFriendly,
+  MdPhoneIphone,
+  MdReorder,
+  MdSettings,
+  MdWarning,
+} from "react-icons/md";
+import { FaMagic } from "react-icons/fa";
+import styled from "styled-components";
 
-import SideBarButton from "../SideBarButton"
-import { reactotronLogo } from "../../images"
-import { ServerStatus } from "../../contexts/Standalone/useStandalone"
+import SideBarButton from "../SideBarButton";
+import { reactotronLogo } from "../../images";
+import { ServerStatus } from "../../contexts/Standalone/useStandalone";
 
 interface SideBarContainerProps {
-  $isOpen: boolean
+  $isOpen: boolean;
 }
 const SideBarContainer = styled.div.attrs(() => ({}))<SideBarContainerProps>`
   display: flex;
@@ -27,32 +28,34 @@ const SideBarContainer = styled.div.attrs(() => ({}))<SideBarContainerProps>`
   width: 115px;
   transition: margin 0.2s ease-out;
   margin-left: ${(props) => (props.$isOpen ? 0 : -115)}px;
-`
+`;
 
 const Spacer = styled.div`
   flex: 1;
-`
+`;
 
-function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: ServerStatus }) {
-  let serverIcon = MdMobiledataOff
-  let iconColor
-  let serverText = "Stopped"
+function SideBar(
+  { isOpen, serverStatus }: { isOpen: boolean; serverStatus: ServerStatus },
+) {
+  let serverIcon = MdMobiledataOff;
+  let iconColor;
+  let serverText = "Stopped";
   if (serverStatus === "started") {
-    serverIcon = MdOutlineMobileFriendly
-    serverText = "Running"
+    serverIcon = MdOutlineMobileFriendly;
+    serverText = "Running";
   }
   if (serverStatus === "portUnavailable") {
-    serverIcon = MdWarning
-    iconColor = "yellow"
-    serverText = "Port 9090 unavailable"
+    serverIcon = MdWarning;
+    iconColor = "yellow";
+    serverText = "Port 9090 unavailable";
   }
 
   const retryConnection = () => {
     if (serverStatus === "portUnavailable") {
       // TODO: Reconnect more elegantly than forcing a reload
-      window.location.reload()
+      window.location.reload();
     }
-  }
+  };
 
   return (
     <SideBarContainer $isOpen={isOpen}>
@@ -70,7 +73,12 @@ function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: Serv
         matchPath="/native"
         text="React Native"
       />
-      <SideBarButton icon={FaMagic} path="/customCommands" text="Custom Commands" iconSize={25} />
+      <SideBarButton
+        icon={FaMagic}
+        path="/customCommands"
+        text="Custom Commands"
+        iconSize={25}
+      />
 
       <Spacer />
 
@@ -83,8 +91,14 @@ function SideBar({ isOpen, serverStatus }: { isOpen: boolean; serverStatus: Serv
       />
 
       <SideBarButton icon={MdLiveHelp} path="/help" text="Help" hideTopBar />
+      <SideBarButton
+        icon={MdSettings}
+        path="/settings"
+        text="Settings"
+        hideTopBar
+      />
     </SideBarContainer>
-  )
+  );
 }
 
-export default SideBar
+export default SideBar;
